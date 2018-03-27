@@ -1,0 +1,444 @@
+var num=1;
+var chapterNum=1;
+var totalNumQues=0;
+var finalScore=0;
+var specChap=false;
+//must change this block
+/*
+var chapOneQ=["Is this the first?","Is this the second?","Is this the third?","Is this the fourth?"];
+var ans1=["Yes1","Um1","Maybe1","No1","Yes2","Um2","Maybe2","No2","Yes3","Um3","Maybe3","No3","Yes4","Um4","Maybe4","No4"];
+var ansR1=["Yes1","Um2","Maybe3","No4"];
+var chapTwoQ=["Is this the fifth?","Is this the sixth?","Is this the seventh?","Is this the ninth?"];
+var ans2=["Yes5","Um5","Maybe5","No5","Yes6","Um6","Maybe6","No6","Yes7","Um7","Maybe7","No7","Yes9","Um9","Maybe9","No9"];
+var ansR2=["Yes5","Um6","Maybe7","No9"];
+var chapOne=[chapOneQ,ans1,ansR1];
+var chapTwo=[chapTwoQ,ans2,ansR2];
+var chapters=[chapOne,chapTwo];*/
+var chapters=[];
+//end of change
+
+var tryNum=0;
+var callWhat=true;
+var randQues=[];
+var randQuesFinal=[];
+var randQuizGo=false;
+var wrongQues=[];
+var numberofQues;
+var numberofChap;
+
+function next(){
+if (callWhat==false){
+	if (specChap==true){
+		var numberofQues=chapters[chapterNum-1];
+		numberofQues=numberofQues[0];
+		numberofQues=numberofQues.length;
+		if (num>numberofQues){
+			done(1);
+		}
+	}
+	else
+	if (1==1){
+		if (randQuizGo==true)
+		{
+			if (num>totalNumQues)
+			
+			done(1);
+		}
+		else {
+			numberofQues=chapters[chapterNum-1];
+			numberofQues=numberofQues[0];
+			numberofQues=numberofQues.length;
+			if (num>numberofQues){	
+				chapterNum++;
+				num=1;
+			}
+			if ((chapterNum>numberofChap)){
+				done(1);
+			}
+		}
+	}
+	unCheckandDisable();
+
+	document.getElementById("submit").innerHTML="Submit";
+	if (randQuizGo==true){
+        	document.getElementById("ques").innerHTML=num+". "+getQues(num,-1);
+	}
+	else{
+		document.getElementById("chapterNumH").innerHTML="Chapter "+chapterNum;
+        	document.getElementById("ques").innerHTML=num+". "+getQues(num,chapterNum);
+	}	
+	document.getElementById("result").innerHTML=" ";
+	makeWhite();
+	callWhat=true;
+}else
+if (callWhat==true){
+	var correct=false;	
+	tryNum++;
+	if(document.getElementById('sairam1').checked) {
+  		if ((document.getElementById("a1").innerHTML===getRealAns(num,chapterNum))||((randQuizGo==true)&&(document.getElementById("a1").innerHTML===getRealAns(num,-1)))){
+			correct=true;
+			document.getElementById("a1").style.backgroundColor="limegreen";
+		}
+		else {
+			document.getElementById("a1").style.backgroundColor="red";
+		}
+	}
+	if(document.getElementById('sairam2').checked) {
+  		if ((document.getElementById("a2").innerHTML===getRealAns(num,chapterNum))||((randQuizGo==true)&&(document.getElementById("a2").innerHTML===getRealAns(num,-1)))){
+			correct=true;
+			document.getElementById("a2").style.backgroundColor="limegreen";
+		}
+		else {
+			document.getElementById("a2").style.backgroundColor="red";
+		}
+	}
+	if(document.getElementById('sairam3').checked) {
+  		if ((document.getElementById("a3").innerHTML===getRealAns(num,chapterNum))||((randQuizGo==true)&&(document.getElementById("a3").innerHTML===getRealAns(num,-1)))){
+			correct=true;
+			document.getElementById("a3").style.backgroundColor="limegreen";
+		}
+		else {
+			document.getElementById("a3").style.backgroundColor="red";
+		}
+	}
+	if(document.getElementById('sairam4').checked) {
+  		if ((document.getElementById("a4").innerHTML===getRealAns(num,chapterNum))||((randQuizGo==true)&&(document.getElementById("a4").innerHTML===getRealAns(num,-1)))){
+			correct=true;
+			document.getElementById("a4").style.backgroundColor="limegreen";
+		}
+		else {
+			document.getElementById("a4").style.backgroundColor="red";
+		}
+	}
+	if (correct==true)
+	{	
+		document.getElementById("result").innerHTML="Correct! The answer is "+getRealAns(num,chapterNum);
+		
+		num++;
+		if (tryNum==1)
+		finalScore++;
+		document.getElementById('sairam1').disabled= true;		
+		document.getElementById('sairam2').disabled= true;		
+		document.getElementById('sairam3').disabled= true;
+		document.getElementById('sairam4').disabled= true;
+		document.getElementById("submit").innerHTML="Next Question";
+		if (randQuizGo==false){
+			numberofQues=chapters[chapterNum-1];
+			numberofQues=numberofQues[0];
+			numberofQues=numberofQues.length;
+			if (num>numberofQues)
+			{
+				chapterNum++;
+				if (chapterNum>numberofChap){
+					document.getElementById("submit").innerHTML="Finish";
+				}		
+				chapterNum--;
+			}
+		}
+		if (num>totalNumQues){
+			document.getElementById("submit").innerHTML="Finish";
+		}
+		
+		callWhat=false;
+		tryNum=0;
+	}
+	else {
+		if ((document.getElementById('sairam4').checked)||(document.getElementById('sairam3').checked)||(document.getElementById('sairam2').checked)||(document.getElementById('sairam1').checked)){
+			document.getElementById("result").innerHTML="That is wrong, try Again.";
+			if(tryNum==1)
+			wrongQues.push(getQues(num,chapterNum));
+		}
+		else {document.getElementById("result").innerHTML="Please Select An Answer.";
+			tryNum--;
+		}
+	}
+}
+}
+function getQues(quesNum,chapNum){
+	if (chapNum==-1)
+	{
+		var i=0;
+		findChapter(randQuesFinal[quesNum-1].toString());
+		i=findQuestions(findChapter(randQuesFinal[quesNum-1].toString()),randQuesFinal[quesNum-1].toString());
+		var tempArrFor=chapters[findChapter(randQuesFinal[quesNum-1].toString())-1];
+		tempArrFor=tempArrFor[1];
+		document.getElementById("a1").innerHTML=tempArrFor[(i*4)-4].toString();
+		document.getElementById("a2").innerHTML=tempArrFor[(i*4)-3].toString();
+		document.getElementById("a3").innerHTML=tempArrFor[(i*4)-2].toString();
+		document.getElementById("a4").innerHTML=tempArrFor[(i*4)-1].toString();
+		document.getElementById("chapterNumH").innerHTML="Chapter "+findChapter(randQuesFinal[quesNum-1].toString()),randQuesFinal[quesNum-1].toString();
+		return randQuesFinal[quesNum-1].toString();
+	}
+	else{
+		var tempArr=[];
+		tempArr=chapters[chapNum-1];
+		tempArr=tempArr[1];
+		document.getElementById("a1").innerHTML=tempArr[(quesNum*4)-4].toString();
+		document.getElementById("a2").innerHTML=tempArr[(quesNum*4)-3].toString();
+		document.getElementById("a3").innerHTML=tempArr[(quesNum*4)-2].toString();
+		document.getElementById("a4").innerHTML=tempArr[(quesNum*4)-1].toString();
+		var tempArr=[];
+		tempArr=chapters[chapNum-1];
+		tempArr=tempArr[0];
+		tempArr=tempArr[quesNum-1];
+		return tempArr.toString();
+	}	
+}
+function getRealAns(quesNum,chapNum){
+	if (chapNum==-1)
+	{
+		var tempArrFor=chapters[findChapter(randQuesFinal[quesNum-1].toString())-1];
+		tempArrFor=tempArrFor[2];
+		return tempArrFor[findQuestions(findChapter(randQuesFinal[quesNum-1].toString()),randQuesFinal[quesNum-1].toString())-1].toString();
+		
+	}
+	var tempArr=[];
+	tempArr=chapters[chapNum-1];
+	tempArr=tempArr[2];
+	return tempArr[quesNum-1].toString();
+}
+function done(x){
+	num--;
+	document.getElementById("quizssect").style.display = "none";
+	if (x==2)
+	{
+		document.getElementById("notFini").innerHTML = "It Looks Like You Have Not Finished the Quiz!";
+		wrongQues=[];
+	}
+	if (x!=3){
+		document.getElementById("score").innerHTML="You got "+finalScore+" out of "+totalNumQues+" questions correct.";
+		document.getElementById("done").style.display = "block";
+		if (wrongQues.length==0){
+			document.getElementById("goThro").style.display = "none";
+		}
+		else {
+			document.getElementById("goThro").style.display = "inline";
+		}
+	}
+	if (x==3){
+		restart();
+		document.getElementById("goThro").style.display = "none";
+		document.getElementById("startscreenFirst").style.display="block";
+		document.getElementById("startscreen").style.display="none";
+		chapters=[];
+		document.getElementById("please").style.display = "none";
+		document.getElementById("imageAndName").innerHTML="Gurus Quiz";
+		document.body.style.backgroundImage = "url('gurus.jpg')";
+	}
+
+		randQuizGo=false;
+}
+
+function start(){
+	var e = document.getElementById("select");
+	e = e.options[e.selectedIndex].value;
+	if (e==="Random Quiz")
+	{
+		for (var z=0;z<chapters.length;z++)
+		{	
+			var tempArrFor=chapters[z];
+			tempArrFor=tempArrFor[0];
+			for (var y=0;y<tempArrFor.length;y++)
+				randQues.push(tempArrFor[y]);
+		}
+		var ranNums=[];
+		for (var i=0;i<(randQues.length);i++)
+		{
+			ranNums.push(i);
+			ranNums=shuffle(ranNums);
+		}
+		for (var a=0;a<Math.round(ranNums.length/2);a++)
+			randQuesFinal.push(randQues[ranNums[a]]);
+		randQuizGo=true;
+		totalNumQues=Math.round(ranNums.length/2);
+		chapterNum=-1;
+        	document.getElementById("ques").innerHTML=num+". "+getQues(num,chapterNum);
+		
+	}else{
+		if (e>0)
+		{	
+			chapterNum=e;
+			specChap=true;
+			var temp=chapters[chapterNum-1];
+			totalNumQues+=temp[0].length;
+		}
+		else{
+			for (var z=0;z<chapters.length;z++)
+			{	
+				var tempArrFor=chapters[z];
+				tempArrFor=tempArrFor[0];
+				totalNumQues+=tempArrFor.length;
+			}
+		}
+		document.getElementById("chapterNumH").innerHTML="Chapter "+chapterNum;
+        	document.getElementById("ques").innerHTML=num+". "+getQues(num,chapterNum);
+	}
+		document.getElementById("startscreen").style.display = "none";
+		document.getElementById("quizssect").style.display = "block";
+		numberofChap=chapters.length;
+		numberofQues=chapters[chapterNum-1];
+		numberofQues=numberofQues[0];
+		numberofQues=numberofQues.length;
+}
+function begin(arr){
+	var chapt=[];
+	var chapQ=[];
+	var ans=[];
+	var realAns=[];
+  	for (var x=0;x<arr.length;x++){
+		var arrRet=arr[x];
+		for (var i=0;i<arrRet.length;i++)
+		{
+			var tempQues=arrRet[i];
+			chapQ.push(tempQues[0]);
+			ans.push(tempQues[1]);
+			ans.push(tempQues[2]);
+			ans.push(tempQues[3]);
+			ans.push(tempQues[4]);
+			realAns.push(tempQues[5]);
+			chapt.push(chapQ);
+			chapt.push(ans);
+			chapt.push(realAns);
+		}
+		chapters.push(chapt);
+		chapQ=[];
+		ans=[];
+		realAns=[];
+		chapt=[];
+	}
+	document.getElementById("select").options.length=0;
+
+	var select= document.getElementById("select");
+	var option = document.createElement('option');
+    	option.text  = option.value= "All Chapters";
+    	select.add(option);
+    	for(var x=0;x<chapters.length;x++) {
+  		var option = document.createElement('option');
+    		option.text  = "Chapter "+(x+1);
+		option.value=(x+1);
+    		select.add(option);
+      	}
+	var option = document.createElement('option');
+    	option.text  = option.value= "Random Quiz";
+    	select.add(option);
+	document.getElementById("done").style.display = "none";
+	document.getElementById("quizssect").style.display = "none";
+}
+function restart(){
+	chapterNum=1;		
+	num=1;
+	specChap=false;
+	finalScore=0;
+	randQuesFinal=[];
+	callWhat=true;
+	tryNum=0;
+	totalNumQues=0;
+	randQuizGo=false;
+	randQues=[];
+	wrongQues=[];
+	document.getElementById("done").style.display = "none";
+	document.getElementById("startscreen").style.display = "block";
+	document.getElementById("result").innerHTML=" ";
+	makeWhite();
+	unCheckandDisable();
+	document.getElementById("submit").innerHTML="Submit";
+	
+}
+function clicked(){
+	makeWhite();
+	if(document.getElementById('sairam1').checked) {
+		document.getElementById('sairam1').style.backgroundColor="yellow";
+  		document.getElementById("a1").style.backgroundColor="yellow";
+	}
+	if(document.getElementById('sairam2').checked) {
+		document.getElementById('sairam2').style.backgroundColor="yellow";
+  		document.getElementById("a2").style.backgroundColor="yellow";
+	}
+	if(document.getElementById('sairam3').checked) {
+		document.getElementById('sairam3').style.backgroundColor="yellow";
+  		document.getElementById("a3").style.backgroundColor="yellow";
+	}
+	if(document.getElementById('sairam4').checked) {
+		document.getElementById('sairam4').style.backgroundColor="yellow";
+  		document.getElementById("a4").style.backgroundColor="yellow";
+	} 
+}
+function findChapter(ques){
+	for (var z=0;z<chapters.length;z++)
+	{	
+		var tempArrFor=chapters[z];
+		tempArrFor=tempArrFor[0];
+		for (var y=0;y<tempArrFor.length;y++)
+			if (tempArrFor[y].toString()===ques)
+				return z+1;
+	}
+}
+function findQuestions(chapterNum,nameQues){
+	var tempArrFor=chapters[chapterNum-1];
+	tempArrFor=tempArrFor[0];
+	for (var i=0;i<tempArrFor.length;i++){
+		if (tempArrFor[i].toString()===nameQues)
+			return i+1;
+	}
+}
+function shuffle(array) {
+    var i = array.length,
+        j = 0,
+        temp;
+
+    while (i--) {
+
+        j = Math.floor(Math.random() * (i+1));
+
+        // swap randomly chosen element with current element
+        temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+
+    }
+
+    return array;
+}
+function goThrough(){
+	chapterNum=1;		
+	num=1;
+	specChap=false;
+	finalScore=0;
+	randQuesFinal=[];
+	callWhat=true;
+	tryNum=0;
+	totalNumQues=0;
+	randQues=[];
+	randQuizGo=true;	
+	randQuesFinal=wrongQues;
+	totalNumQues=wrongQues.length;
+	chapterNum=-1;
+        document.getElementById("ques").innerHTML=num+". "+getQues(num,chapterNum);
+	makeWhite();
+	document.getElementById("result").innerHTML=" ";
+	document.getElementById("startscreen").style.display = "none";
+	document.getElementById("quizssect").style.display = "block";
+	document.getElementById("done").style.display = "none";
+	wrongQues=[];
+}
+function makeWhite(){
+	document.getElementById('sairam1').style.backgroundColor="white";
+  	document.getElementById("a1").style.backgroundColor="white";
+	document.getElementById('sairam2').style.backgroundColor="white";
+  	document.getElementById("a2").style.backgroundColor="white";
+	document.getElementById('sairam3').style.backgroundColor="white";
+  	document.getElementById("a3").style.backgroundColor="white";
+	document.getElementById('sairam4').style.backgroundColor="white";
+  	document.getElementById("a4").style.backgroundColor="white";
+}
+function unCheckandDisable(){
+	document.getElementById('sairam1').checked = false;
+	document.getElementById('sairam2').checked = false;
+	document.getElementById('sairam3').checked = false;
+	document.getElementById('sairam4').checked = false;
+	document.getElementById('sairam1').disabled= false;
+	document.getElementById('sairam2').disabled= false;
+	document.getElementById('sairam3').disabled= false;
+	document.getElementById('sairam4').disabled= false;
+}
+myFunctionFirst();
