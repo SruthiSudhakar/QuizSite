@@ -1,0 +1,69 @@
+var saiBaba=[
+//chapter1
+			[
+				["To whom does Hemadpant make the first obeisance while starting the Satcharita and prays to remove all obstacles and make the work a success and says that Shri Sai is that GOD Himself?", "Lord Ganesha","Goddess Saraswathi","Lord Shiva","Lord Vishnu","Lord Ganesha"],
+				["What did Sai Baba ask the four women who ground the wheat to do?", "Divide the flour up into four portions and take it home.","Distribute that to the people who had gathered in the Masjid","Take the flour and throw it on the village border limits","Make Roti’s from and distribute to Villagers","Take the flour and throw it on the village border limits"],
+				["Why did Sai Baba ask the women to throw the flour in the village border?", "To feed the animals who were starving","Cholera Epidemic was spreading in the village and this was Baba's remedy against the same.","As a way to identify the border limits of Shirdi","Since HE was angry with the women who were trying to take the flour home.","Cholera Epidemic was spreading in the village and this was Baba's remedy against the same."],
+				["For about how many years did Baba live in Shirdi?", "60 years","70 years","40 years","50 years","60 years"],
+				["Who is Kabir’s guru?", "Guru Ekanath","Guru Niranjana","Guru Namdev","Guru Nipathiranjana","Guru Nipathiranjana"],
+				["While providing a philosophical significance to the Wheat grinding incident what does Hemadpant compare the two stones of the Baba’s hand mill?", "Jnana and Karma","Karma and Bhakti","Bhakti and Jnana","3 gunas and Ahamkara","Karma and Bhakti"],
+				["It was the firm conviction of Baba that Knowledge or Self-realization is not possible, unless there is the prior act of grinding of all our impulses, desires, sins; and of the three gunas, viz. Sattva, Raja and Tama; What did Baba refer to as so subtle and therefore very difficult to be got rid of.", "Jnana","Desire","Anger","Ahamkara or Ego","Ahamkara or Ego"]
+			],
+//chapter2
+			[
+				["Who has stated that the Lord loves those who write the lives of saints?","Nanasaheb Chandorkar","Guru Namdev","Narahari","Shri Jnaneshwar Maharaj","Shri Jnaneshwar Maharaj"],
+				["Who wrote the book Shri Sainath Bhajana Mala?","Das-Ganu Maharaj","Mrs. Savitribai Raghunath Tendulkar","Amidas Bhavani Mehta","Hemadpant","Mrs. Savitribai Raghunath Tendulkar"],
+				["Who pleaded to Sai Baba on behalf of Hemadpant to let him write Satcharita?","Mr. Madhavrao Deshpande alias Shama","Kakashaeb Dixit","Nanasaheb Chandorkar","Das-Ganu Maharaj","Mr. Madhavrao Deshpande alias Shama"],
+				["Fill in the blanks: When his -- -- -- - is completely annihilated and there is left no trace of it, I Myself shall enter into him and shall Myself write My own life.","Bhakthi","Desire","Karma","Ego","Ego"],
+				["Which was the first place in Shirdi for lodging pilgrim devotees?","Sathe’s Wada","Dixit Wada","Butti Wada","Dagdi Wada","Sathe’s Wada"],
+				["Through whom did Baba give Hemadpant the message about the necessity of Guru?","Nanasaheb Chandorkar","Balasaheb Bhate","Kakasaheb Dixit","Mr. Madhavrao Deshpande","Kakasaheb Dixit"],
+				["Who was Sri Krishna’s guru?","Vashishta","Sandipani","Vyasa","Parasara","Sandipani"]
+			]
+];
+var swamiji=[
+//chapter1
+			[
+				["Q1", "1","2","3","4","4"],
+				["Q2", "2","3","4","5","3"]
+			],
+//chapter2
+			[
+				["Q4","4","5","6","7","5"],
+				["Q5","5","6","7","8","7"]
+			]
+];
+var arr=["Sai Baba","Swamiji"];
+var arrOne=[saiBaba,swamiji];
+var imageArr=["'saibaba.png'","'swamiji.jpg'"];
+function myFunctionFirst(){
+	
+	document.getElementById("done").style.display = "none";
+	document.getElementById("quizssect").style.display = "none";
+	document.getElementById("startscreen").style.display = "none";
+	var select= document.getElementById("selectFirst");
+    	for(var x=0;x<arr.length;x++) {
+  		var option = document.createElement('option');
+    		option.text  = arr[x].toString();
+		option.value=(x+1);
+    		select.add(option);
+      	}
+}
+function startFirst(){
+	var e = document.getElementById("selectFirst");
+	e = e.options[e.selectedIndex].value;
+	if (e==0)
+	{
+		document.getElementById("please").style.display = "block";
+	}
+	else{
+		begin(arrOne[e-1]);
+		document.getElementById("startscreenFirst").style.display = "none";
+		document.getElementById("startscreen").style.display = "block";
+		document.getElementById("imageAndName").innerHTML=arr[e-1];
+		if (e==1)
+		document.body.style.backgroundImage = "url('saibaba.png')";
+		if (e==2)
+		document.body.style.backgroundImage = "url('swamiji.jpg')";
+	}
+	
+}
