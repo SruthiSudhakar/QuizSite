@@ -1,0 +1,55 @@
+<!-- value attribute is what is sent when submitted-->
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="sairamVOneCss.css">
+	<title>Sai Satcharita Quiz</title>
+</head>
+
+<body >
+	<h1 id="imageAndName">Gurus Quiz    </h1>
+<div id="whole">
+<div id="done">
+	<h2 id="notFini">Congratulations! You have finished the quiz!</h2>
+	<h3 id="score"></h3>
+	<button id="restart" onClick=restart()>Restart Quiz</button>
+	<button id="goThro" onClick=goThrough()>Go Through Inncorrect Questions</button>
+</div>	
+<div id="startscreen">
+	<select id="select">
+  		<option value="0">All Chapters</option>
+	</select>
+	<button id="startButton" onClick=start()>Start</button>
+	<button id="backToMain" onClick=done(3)>Choose A Different Quiz</button>
+</div>
+<div id="startscreenFirst">
+	<select id="selectFirst">
+  		<option value="0">Select a Quiz To Take</option>
+	</select>
+	<button id="startButton" onClick=startFirst()>Start</button>
+	<p id="please" style="display:none">Please Choose from The Quizes Above.</p>
+</div>
+<div id="quizssect">
+	<br>
+	<h2 id="chapterNumH"></h2>
+	<h3 id="ques"></h3>
+	<form action="">
+		<input type="radio" name="answer" id="sairam1" onClick=clicked()><p class="iins" style="display:inline" id="a1"></p><br>
+		<input type="radio" name="answer" id="sairam2" onClick=clicked()><p class="iins" style="display:inline" id="a2"></p><br>
+		<input type="radio" name="answer" id="sairam3" onClick=clicked()><p class="iins" style="display:inline" id="a3"></p><br>
+		<input type="radio" name="answer" id="sairam4" onClick=clicked()><p class="iins" style="display:inline" id="a4"></p><br>
+	</form>
+	<button class="others" id="submit" onClick=next()>Submit</button>
+	<br>
+	<p id="result"></p>
+	<br>
+	<br>
+	<br>
+	<br>
+	<button class="others" id="end" onClick=done(2)>End Quiz</button>
+</div>
+</div>
+	<script src="questionSheet.js"></script>
+	<script src="sairamVOneJS.js"></script>
+</body>
+</html>
